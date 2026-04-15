@@ -1,5 +1,12 @@
 import app from './app';
+import { connectDB } from './utils/db';
 
-app.listen(3000, ()=>{
-    console.log('Server is up');
-})
+const start = async () => {
+    await connectDB();
+
+    app.listen(3000, ()=>{
+        console.log('Server is up');
+    })
+}
+
+start();
