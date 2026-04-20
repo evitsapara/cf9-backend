@@ -8,6 +8,11 @@ import * as userDAO from '../dao/user.dao';
 
 export const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS || "10");
 
+export const findUsers = async() => {
+    const users = await userDAO.findAll();
+    return users;
+}
+
 export const findUserByEmail = async(email:string) => {
     const user = await userDAO.findByEmail(email);
     if (user) {

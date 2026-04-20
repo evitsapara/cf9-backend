@@ -1,5 +1,9 @@
 import User, { IUser } from "../models/user.model";
 
+export const findAll = async (): Promise<IUser[]> => {
+    return await User.find().populate('roles').lean().exec();
+}
+
 export const findByEmail = async (email: string): Promise<IUser | null> => {
     return await User.findOne({ email: email }).populate('roles').lean().exec();
 }
@@ -17,9 +21,7 @@ export const updateUser = async (username: string, payload: Partial<IUser>): Pro
 //     return await User.findOneAndDelete({ username: username }).populate('roles').lean().exec();
 // }
 
-// export const findAll = async (): Promise<IUser[]> => {
-//     return await User.find().populate('roles').lean().exec();
-// }
+
 // export const findById = async (id: string): Promise<IUser | null> => {
 //     return await User.findById(id).populate('roles').lean().exec();
 // }
