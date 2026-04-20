@@ -1,6 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
+declare global {
+    namespace Express {
+        interface Request {
+            user?: any;
+        }
+    }
+}
 const JWT_SECRET = process.env.JWT_SECRET || 'changeme';
 
 export const authenticate = (req: Request, res: Response, next: NextFunction) => {
@@ -19,10 +26,11 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
 
     try {
         const payload = jwt.verify(token, JWT_SECRET);
+        req.user = payload;
+        console.log("REQ USER>>>", req.user);
         console.log(payload); 
         next()
     } catch (err) {
         res.status(401).json({message: "Invalid or expired token"});
     }
-
 }
